@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,19 +7,57 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from '../api/firebase';
+import { addDoc, collection } from "firebase/firestore";
+import { useState } from 'react';
 
 const theme = createTheme();
 
+
 export default function SignUp() {
+    const [email, setemail] = useState('')
+    const [password, setpassword] = useState('')
+    const [name, setname] = useState('')
+    const [phone, setphone] = useState('')
+    const [account, setaccount] = useState('')
+
+
     const handleSubmit = (event) => {
+
+
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(async (userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+                const userdata = {
+                    uid: user.uid,
+                    email: user.email,
+                    name: name,
+                    phone: phone,
+                    accountNo: account,
+                }
+
+                try {
+                    const docRef = await addDoc(collection(db, "users"), {
+                        userdata
+                    });
+
+                    console.log("Document written with ID: ", docRef.id);
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+            });
+
+
     };
 
     return (
@@ -52,6 +89,9 @@ export default function SignUp() {
                             name="email"
                             autoComplete="email"
                             autoFocus
+                            onChange={(e) => {
+                                setemail(e.target.value);
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -62,6 +102,9 @@ export default function SignUp() {
                             name="name"
                             autoComplete="name"
                             autoFocus
+                            onChange={(e) => {
+                                setname(e.target.value);
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -72,6 +115,9 @@ export default function SignUp() {
                             label="Phone"
                             name="phone"
                             autoComplete="phone"
+                            onChange={(e) => {
+                                setphone(e.target.value);
+                            }}
                             autoFocus
                         />
                         <TextField
@@ -83,6 +129,9 @@ export default function SignUp() {
                             name="account"
                             autoComplete="account"
                             autoFocus
+                            onChange={(e) => {
+                                setaccount(e.target.value);
+                            }}
                         />
                         <TextField
                             margin="normal"
@@ -93,8 +142,11 @@ export default function SignUp() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={(e) => {
+                                setpassword(e.target.value);
+                            }}
                         />
-                       
+
 
                         <Button
                             type="submit"
