@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,23 +7,60 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import { auth } from '../api/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { Alert, Snackbar } from '@mui/material';
+
+
 
 
 
 const theme = createTheme();
 
 export default function SignIn() {
+
+
+    const [password, setpassword] = useState('')
+    const [email, setemail] = useState('')
+    const [open, setOpen] = useState(false);
+
+    const handleClick = () => {
+      setOpen(true);
+    };
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
     const handleSubmit = (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        signInWithEmailAndPassword(auth, email, password)
+            .then(async(userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                await console.log(user);
+                window.location = '/dashboard'
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage);
+                handleClick()
+            });
     };
 
     return (
         <ThemeProvider theme={theme}>
+            <Snackbar open={open} autoHideDuration={6000}  onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error" variant='filled' sx={{ width: '100%' }}>
+                    Invalid username or password
+                </Alert>
+            </Snackbar>
+            
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
@@ -46,10 +82,14 @@ export default function SignIn() {
                             margin="normal"
                             required
                             fullWidth
+                            type='email'
                             id="email"
                             label="Email Address"
                             name="email"
                             autoComplete="email"
+                            onChange={(e) => {
+                                setemail(e.target.value);
+                            }}
                             autoFocus
                         />
                         <TextField
@@ -61,6 +101,9 @@ export default function SignIn() {
                             type="password"
                             id="password"
                             autoComplete="current-password"
+                            onChange={(e) => {
+                                setpassword(e.target.value);
+                            }}
                         />
 
                         <Button

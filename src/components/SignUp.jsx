@@ -46,9 +46,11 @@ export default function SignUp() {
                     });
 
                     console.log("Document written with ID: ", docRef.id);
+                    window.location='/dashboard'
                 } catch (e) {
                     console.error("Error adding document: ", e);
                 }
+
 
             })
             .catch((error) => {
