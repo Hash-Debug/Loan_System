@@ -13,9 +13,6 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Alert, Snackbar } from '@mui/material';
 
 
-
-
-
 const theme = createTheme();
 
 export default function SignIn() {
