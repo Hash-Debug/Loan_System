@@ -17,6 +17,7 @@ const rows = [
   createData('Frozen yoghurt', 159, 6.0, 24, <Chip label="Approved" color='success' icon={<Done />} />),
   createData('Cupcake', 305, 3.7, 67, <Chip label="Pending" color='warning' icon={<AccessTime />} />),
   createData('Eclair', 262, 16.0, 24, <Chip label="Approved" color='success' icon={<Done />} />),
+  createData('Cupcake', 305, 3.7, 67, <Chip label="Pending" color='warning' icon={<AccessTime />} />),
   createData('Ice cream sandwich', 237, 9.0, 37, <Chip label="Approved" color='success' icon={<Done />} />),
   createData('Gingerbread', 356, 16.0, 49, <Chip label="Rejected" color='error'  icon={<Clear />} />),
 ];
@@ -26,7 +27,7 @@ export default function Dashboard() {
     <>
       <Typography  align='center' variant='h2'>Dashboard</Typography>
       <br></br>
-      <TableContainer className='container' variant='elevation' component={Paper}>
+      <TableContainer  className='container' variant='elevation' component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>

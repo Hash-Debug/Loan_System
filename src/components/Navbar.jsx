@@ -9,8 +9,8 @@ import { auth } from '../api/firebase'
 
 
 
-function Navbar({user}) {
-   
+function Navbar({ user }) {
+
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -21,9 +21,15 @@ function Navbar({user}) {
                             Loan App
                         </Link>
                     </Typography>
-                   
+
                     {
-                        user ? <Button variant='contained' type='button' color='secondary' onClick={()=>{auth.signOut(); window.location="/"}} >Sign Out</Button> :
+                        user ? <>
+                            <Button variant='outlined' type='button' color='secondary' href='/dashboard' >Dashboard</Button>
+                            <p> &nbsp;</p>
+
+                            <Button variant='contained' type='button' color='secondary' onClick={() => { auth.signOut(); window.location = "/" }} >Sign Out</Button>
+                        </>
+                            :
                             <>
                                 <Link style={{ textDecoration: "none" }} to='/signin'>
                                     <Button variant='contained' type='button' color='secondary' >Sign in</Button>
