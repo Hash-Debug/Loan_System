@@ -8,6 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Chip, Typography } from '@mui/material';
 import { AccessTime, Clear, Done } from '@mui/icons-material';
+import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
+import { auth, db } from '../api/firebase';
+
+
+
 
 function createData(name, amount, duration, interest, status) {
   return { name, amount, duration, interest, status };
@@ -17,17 +22,50 @@ const rows = [
   createData('Frozen yoghurt', 159, 6.0, 24, <Chip label="Approved" color='success' icon={<Done />} />),
   createData('Cupcake', 305, 3.7, 67, <Chip label="Pending" color='warning' icon={<AccessTime />} />),
   createData('Eclair', 262, 16.0, 24, <Chip label="Approved" color='success' icon={<Done />} />),
-  createData('Cupcake', 305, 3.7, 67, <Chip label="Pending" color='warning' icon={<AccessTime />} />),
+  createData('Cupca', 305, 3.7, 67, <Chip label="Pending" color='warning' icon={<AccessTime />} />),
   createData('Ice cream sandwich', 237, 9.0, 37, <Chip label="Approved" color='success' icon={<Done />} />),
-  createData('Gingerbread', 356, 16.0, 49, <Chip label="Rejected" color='error'  icon={<Clear />} />),
+  createData('Gingerbread', 356, 16.0, 49, <Chip label="Rejected" color='error' icon={<Clear />} />),
 ];
 
 export default function Dashboard() {
+
+
+
+  async function fetchUserData() {
+
+    const q = query(collection(db, "users"), where("uid", "==", "vvoyEcyczteEk1IIipKCfp95bj92"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const cities = [];
+      console.log(querySnapshot);
+      querySnapshot.forEach((doc) => {
+        cities.push(doc.data().name);
+      });
+      console.log("Current cities in CA: ", cities.join(", "));
+    });
+
+    // const user = await auth.currentUser.uid
+    // console.log(auth.currentUser.uid);
+    // const q = await query(collection(db, "users"), where("uid", "==", "vvoyEcyczteEk1IIipKCfp95bj92"));
+    // console.log(q);
+
+    // const querySnapshot = await getDocs(q);
+    // console.log(querySnapshot);
+    // querySnapshot.forEach((doc) => {
+    //   // doc.data() is never undefined for query doc snapshots
+    //   console.log(doc.id, " => ", doc.data());
+    // });
+
+  }
+  React.useEffect(() => {
+    fetchUserData()
+  }, [])
+  // console.log();
+
   return (
     <>
-      <Typography  align='center' variant='h2'>Dashboard</Typography>
+      <Typography align='center' variant='h2'>Dashboard</Typography>
       <br></br>
-      <TableContainer  className='container' variant='elevation' component={Paper}>
+      <TableContainer className='container' variant='elevation' component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
