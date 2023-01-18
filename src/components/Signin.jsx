@@ -39,6 +39,7 @@ export default function SignIn() {
                 // Signed in 
                 const user = userCredential.user;
                 await console.log(user);
+                window.localStorage.setItem('uid', user.uid)
                 window.location = '/dashboard'
                 // ...
             })

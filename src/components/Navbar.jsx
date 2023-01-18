@@ -27,7 +27,7 @@ function Navbar({ user }) {
                             <Button variant='outlined' type='button' color='secondary' href='/dashboard' >Dashboard</Button>
                             <p> &nbsp;</p>
 
-                            <Button variant='contained' type='button' color='secondary' onClick={() => { auth.signOut(); window.location = "/" }} >Sign Out</Button>
+                            <Button variant='contained' type='button' color='secondary' onClick={() => { auth.signOut(); window.localStorage.removeItem('uid') ; window.location = "/" }} >Sign Out</Button>
                         </>
                             :
                             <>
