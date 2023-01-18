@@ -5,10 +5,11 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+
 import Paper from '@mui/material/Paper';
-import { Chip, Typography } from '@mui/material';
-import { AccessTime, Clear, Done } from '@mui/icons-material';
-import { collection, query, where, getDocs, onSnapshot } from "firebase/firestore";
+import { Chip, Typography, ListItemButton, List, ListItemIcon, ListItem, ListItemText, Grid } from '@mui/material';
+import { AccessTime, Clear, Done, StairsOutlined, } from '@mui/icons-material';
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from '../api/firebase';
 
 
@@ -27,44 +28,99 @@ const rows = [
   createData('Gingerbread', 356, 16.0, 49, <Chip label="Rejected" color='error' icon={<Clear />} />),
 ];
 
+
+
 export default function Dashboard() {
 
+  const [user, setuser] = React.useState(null)
+  
 
 
+  const [uid, setuid] = React.useState(null)
   async function fetchUserData() {
+    await setuid(auth.currentUser.uid)
 
-    const q = query(collection(db, "users"), where("uid", "==", "vvoyEcyczteEk1IIipKCfp95bj92"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const cities = [];
-      console.log(querySnapshot);
-      querySnapshot.forEach((doc) => {
-        cities.push(doc.data().name);
-      });
-      console.log("Current cities in CA: ", cities.join(", "));
-    });
 
-    // const user = await auth.currentUser.uid
-    // console.log(auth.currentUser.uid);
-    // const q = await query(collection(db, "users"), where("uid", "==", "vvoyEcyczteEk1IIipKCfp95bj92"));
+    const q = await query(collection(db, "users"), where("userdata.uid", "==", uid));
     // console.log(q);
 
-    // const querySnapshot = await getDocs(q);
-    // console.log(querySnapshot);
-    // querySnapshot.forEach((doc) => {
-    //   // doc.data() is never undefined for query doc snapshots
-    //   console.log(doc.id, " => ", doc.data());
-    // });
+    const querySnapshot = await getDocs(q);
+    console.log(querySnapshot);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+    });
+    
 
   }
   React.useEffect(() => {
     fetchUserData()
-  }, [])
+  },[fetchUserData])
   // console.log();
 
   return (
-    <>
+    <div style={{ padding: '20px' }}>
       <Typography align='center' variant='h2'>Dashboard</Typography>
       <br></br>
+
+      <Grid container spacing={6} justifyContent="space-around" alignItems="stretch">
+        <Grid item xs={3}>
+
+
+          <List
+
+            sx={{ width: '100%', maxWidth: 360, bgcolor: '#242B2E', color: 'white', borderRadius: '24px' }}
+            aria-label="contacts"
+          >
+            <ListItem >
+              <ListItemButton>
+                <ListItemIcon>
+                  <StairsOutlined color='primary' />
+                </ListItemIcon>
+                <ListItemText primary="Chelsea Otakan" />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem >
+              <ListItemButton>
+                <ListItemIcon>
+                  <StairsOutlined color='primary' />
+                </ListItemIcon>
+                <ListItemText primary="Chelsea Otakan" />
+              </ListItemButton>
+            </ListItem>
+
+          </List>
+        </Grid>
+        <Grid item xs={3} >
+          <List
+
+            sx={{ width: '100%', maxWidth: 360, bgcolor: '#242B2E', color: 'white', borderRadius: '24px' }}
+            aria-label="contacts"
+          >
+            <ListItem >
+              <ListItemButton>
+                <ListItemIcon>
+                  <StairsOutlined color='primary' />
+                </ListItemIcon>
+                <ListItemText primary="Chelsea Otakan" />
+              </ListItemButton>
+            </ListItem>
+
+            <ListItem >
+              <ListItemButton>
+                <ListItemIcon>
+                  <StairsOutlined color='primary' />
+                </ListItemIcon>
+                <ListItemText primary="Chelsea Otakan" />
+              </ListItemButton>
+            </ListItem>
+
+          </List>
+        </Grid>
+      </Grid>
+      <br />
+
       <TableContainer className='container' variant='elevation' component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -94,6 +150,6 @@ export default function Dashboard() {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </div>
   );
 }
