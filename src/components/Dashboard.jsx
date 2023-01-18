@@ -11,6 +11,7 @@ import { Chip, Typography, ListItemButton, List, ListItemIcon, ListItem, ListIte
 import { AccessTime, AccountBalance, AlternateEmail, Clear, Done, Person, PhoneAndroid } from '@mui/icons-material';
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '../api/firebase';
+import AddLoan from './AddLoan';
 
 
 
@@ -33,18 +34,18 @@ const rows = [
 export default function Dashboard() {
 
   const [user, setuser] = React.useState(null)
-  
-  // const [uid, setuid] = React.useState(null)
-  
 
-  
+  // const [uid, setuid] = React.useState(null)
+
+
+
   React.useEffect(() => {
     async function fetchUserData() {
-  
-  
+
+
       const q = await query(collection(db, "users"), where("userdata.uid", "==", window.localStorage.getItem('uid')));
       // console.log(q);
-  
+
       const querySnapshot = await getDocs(q);
       console.log(querySnapshot);
       querySnapshot.forEach((doc) => {
@@ -54,16 +55,18 @@ export default function Dashboard() {
       });
     }
     fetchUserData()
-  },[])
+  }, [])
   // console.log();
 
-  
+
   return (
     <div style={{ padding: '20px' }}>
+      <AddLoan/>
+     
       <Typography align='center' variant='h2'>Dashboard</Typography>
       <br></br>
 
-      <Grid container  justifyContent="space-around" alignItems="stretch">
+      <Grid container justifyContent="space-around" alignItems="stretch">
         <Grid item xs={3}>
 
 
@@ -77,7 +80,7 @@ export default function Dashboard() {
                 <ListItemIcon>
                   <Person color='primary' />
                 </ListItemIcon>
-                <ListItemText primary={user?user.name:<CircularProgress/>} />
+                <ListItemText primary={user ? user.name : <CircularProgress />} />
               </ListItemButton>
             </ListItem>
 
@@ -86,7 +89,7 @@ export default function Dashboard() {
                 <ListItemIcon>
                   <PhoneAndroid color='primary' />
                 </ListItemIcon>
-                <ListItemText primary={user?user.phone:<CircularProgress/>} />
+                <ListItemText primary={user ? user.phone : <CircularProgress />} />
               </ListItemButton>
             </ListItem>
 
@@ -103,7 +106,7 @@ export default function Dashboard() {
                 <ListItemIcon>
                   <AlternateEmail color='primary' />
                 </ListItemIcon>
-                <ListItemText primary={user?user.email:<CircularProgress/>} />
+                <ListItemText primary={user ? user.email : <CircularProgress />} />
               </ListItemButton>
             </ListItem>
 
@@ -112,7 +115,7 @@ export default function Dashboard() {
                 <ListItemIcon>
                   <AccountBalance color='primary' />
                 </ListItemIcon>
-                <ListItemText primary={user?user.accountNo:<CircularProgress/>} />
+                <ListItemText primary={user ? user.accountNo : <CircularProgress />} />
               </ListItemButton>
             </ListItem>
 
@@ -122,7 +125,7 @@ export default function Dashboard() {
       <br />
 
       <TableContainer className='container' variant='elevation' component={Paper}>
-        <Table sx={{ minWidth: 650, borderRadius:'20px' }} aria-label="simple table">
+        <Table sx={{ minWidth: 650, borderRadius: '20px' }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell>Loan Name</TableCell>
