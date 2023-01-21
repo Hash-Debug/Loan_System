@@ -34,6 +34,7 @@ const rows = [
 export default function Dashboard() {
 
   const [user, setuser] = React.useState(null)
+  const [docid, setdocid] = React.useState(null)
 
   // const [uid, setuid] = React.useState(null)
 
@@ -52,6 +53,7 @@ export default function Dashboard() {
         // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
         setuser(doc.data().userdata)
+        setdocid(doc.id)
       });
     }
     fetchUserData()
@@ -61,7 +63,7 @@ export default function Dashboard() {
 
   return (
     <div style={{ padding: '20px' }}>
-      <AddLoan/>
+      <AddLoan docid={docid} />
      
       <Typography align='center' variant='h2'>Dashboard</Typography>
       <br></br>
