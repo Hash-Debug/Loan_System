@@ -13,8 +13,27 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 export default function AddLoan() {
-    const handleSubmit=(e)=>{
-        // e.preventdefault()
+
+    const [LoanAmnt, setLoanAmnt] = React.useState(null)
+    const [LoanType, setLoanType] = React.useState(null)
+    const [Income, setIncome] = React.useState(null)
+    const [Cibil, setCibil] = React.useState(null)
+    const [Employment, setEmployment] = React.useState(null)
+    const [Duration, setDuration] = React.useState(null)
+
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const loanData = {
+            LoanAmnt: LoanAmnt,
+            LoanType: LoanType,
+            Income: Income,
+            Cibil: Cibil,
+            Employment: Employment,
+            Duration: Duration
+        }
+        console.log(loanData);
     }
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
@@ -52,7 +71,7 @@ export default function AddLoan() {
                     <DialogContentText>
                         Fill in the following details to apply for new loan
                     </DialogContentText>
-                    <Box component='form' onSubmit={handleSubmit()}>
+                    <Box component='form' onSubmit={handleSubmit}>
 
                         <TextField
                             autoFocus
@@ -63,17 +82,20 @@ export default function AddLoan() {
                             fullWidth
                             variant="standard"
                             required
+                            onChange={(e) => {
+                                setLoanAmnt(e.target.value);
+                            }}
                         />
                         <br /><br></br>
                         <FormLabel >Loan Type</FormLabel>
                         <RadioGroup
-                        
+
                             row
                             aria-labelledby="demo-row-radio-buttons-group-label"
                             name="row-radio-buttons-group"
-                        // onChange={(e) => {
-                        //     setType(e.target.value);
-                        // }}
+                            onChange={(e) => {
+                                setLoanType(e.target.value);
+                            }}
                         >
 
                             <FormControlLabel
@@ -103,7 +125,7 @@ export default function AddLoan() {
 
                         </RadioGroup>
                         <TextField
-                        required
+                            required
                             autoFocus
                             margin="dense"
                             id="name"
@@ -111,9 +133,12 @@ export default function AddLoan() {
                             type="number"
                             fullWidth
                             variant="standard"
+                            onChange={(e) => {
+                                setIncome(e.target.value);
+                            }}
                         />
                         <TextField
-                        required
+                            required
                             autoFocus
                             margin="dense"
                             id="name"
@@ -121,19 +146,13 @@ export default function AddLoan() {
                             type="number"
                             fullWidth
                             variant="standard"
+                            onChange={(e) => {
+                                setCibil(e.target.value);
+                            }}
                         />
+                        
                         <TextField
-                        required
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Income"
-                            type="number"
-                            fullWidth
-                            variant="standard"
-                        />
-                        <TextField
-                        required
+                            required
                             autoFocus
                             margin="dense"
                             id="name"
@@ -141,9 +160,12 @@ export default function AddLoan() {
                             type="text"
                             fullWidth
                             variant="standard"
+                            onChange={(e) => {
+                                setEmployment(e.target.value);
+                            }}
                         />
                         <TextField
-                        required
+                            required
                             autoFocus
                             margin="dense"
                             id="name"
@@ -151,10 +173,13 @@ export default function AddLoan() {
                             type="number"
                             fullWidth
                             variant="standard"
+                            onChange={(e) => {
+                                setDuration(e.target.value);
+                            }}
                         />
 
-                            <Button onClick={handleClose}>Cancel</Button>
-                            <Button type='submit' >Apply</Button>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button type='submit' >Apply</Button>
                     </Box>
                 </DialogContent>
             </Dialog>
