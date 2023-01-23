@@ -42,6 +42,7 @@ export default function Dashboard() {
 
   React.useEffect(() => {
     async function fetchUserData() {
+      
 
 
       const q = await query(collection(db, "users"), where("userdata.uid", "==", window.localStorage.getItem('uid')));

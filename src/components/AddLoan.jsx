@@ -9,7 +9,7 @@ import { Box, FormControlLabel, FormLabel, Radio, RadioGroup, SpeedDial } from '
 import { Add } from '@mui/icons-material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { doc, updateDoc } from 'firebase/firestore';
+import {  doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../api/firebase';
 
 
@@ -39,10 +39,13 @@ export default function AddLoan({docid}) {
 
         const userRef= doc(db, "users", docid)
         console.log(userRef);
-        await updateDoc(userRef,{
-            Loans : [loanData]
+        let loans= (await getDoc(userRef)).data().Loan || []
+        loans.push(loanData)
+        updateDoc(userRef,{Loan : loans})
+        // await setDoc(userRef,{
+        //     Loans : [loanData]
 
-        }).then(console.log("updated successfully"))
+        // },{ merge: true }).then(console.log("updated successfully"))
     }
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
