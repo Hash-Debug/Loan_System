@@ -13,6 +13,24 @@ import { Chip } from '@mui/material';
 
 
 function TableContent() {
+    React.useEffect(() => {
+        async function fetchUserData() {
+    
+    
+          const q = await query(collection(db, "users"), where("userdata.uid", "==", window.localStorage.getItem('uid')));
+          // console.log(q);
+    
+          const querySnapshot = await getDocs(q);
+          console.log(querySnapshot);
+          querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            setuser(doc.data().userdata)
+            setdocid(doc.id)
+          });
+        }
+        fetchUserData()
+      }, [])
 
     const rows = [
         createData('Frozen yoghurt', 159, 6.0, 24, <Chip label="Approved" color='success' icon={<Done />} />),
