@@ -23,9 +23,10 @@ function TableContent() {
           const querySnapshot = await getDocs(q);
           console.log(querySnapshot);
           querySnapshot.forEach((doc) => {
+            // here we are getting the user data and loan from it 
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
-            setuser(doc.data().userdata)
+            setuser(doc.data().Loans) 
             setdocid(doc.id)
           });
         }
