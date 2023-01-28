@@ -10,12 +10,21 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CircularProgress } from '@mui/material';
 
-const cards = [1, 2, 3];
 
 const theme = createTheme();
 
 export default function Home() {
+    
+    const cards = {
+        items: [
+
+            { ImgUrl: "https://tfipost.com/wp-content/uploads/2022/04/Shinchan_in_hindi_dubbed_show-1024x571.jpg", Title: "ShinChan", Description: "Shin Chan needed loan to go on a trip to Goa with his friends. His loan was approved, and he had great adventures with Action Comin." },
+            { ImgUrl: "https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/doraemon_header.jpg?itok=M76dFen8&mtime=1470996145", Title: "Doreamon", Description: "Doreamon's time machine was broken due to Nobitas carelessness so he decided to use loaner, now he is having fun in the 24th century. " },
+            { ImgUrl: "https://cdn.sonicgang.com/wp-content/uploads/2019/05/Seesheemaru-large-min.jpg", Title: "Sishimaru", Description: "Sishimaru was put on a strict diet by Hatori, so he needed personal loan to buy chocolate roll, 🤫 why fear when loaner is here" }
+        ]
+    };
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -57,28 +66,29 @@ export default function Home() {
                     </Typography>
                     {/* End hero unit */}
                     <Grid container spacing={4}>
-                        {cards.map((card) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
+                        {cards ? cards.items.map((card, key) => (
+                            <Grid item key={key} xs={12} sm={6} md={4}>
                                 <Card sx={{ maxWidth: 345 }}>
                                     <CardMedia
                                         sx={{ height: 140 }}
-                                        image="https://tfipost.com/wp-content/uploads/2022/04/Shinchan_in_hindi_dubbed_show-1024x571.jpg"
-                                        title="ShinChan"
+                                        image={card.ImgUrl}
+                                        title={card.Title}
+
                                     />
                                     <CardContent>
                                         <Typography gutterBottom variant="h5" component="div">
-                                            Shin Chan
+                                            {card.Title}
                                         </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                        Shin Chan needed loan to go on a trip to Goa with his friends. His loan was approved, and he had great adventures with Action Comin.
+                                        <Typography variant="body2" >
+                                            {card.Description}
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button target="_blank" href='https://en.wikipedia.org/wiki/Crayon_Shin-chan' size="small">Learn More</Button>
+                                        <Button variant='outlined' href={window.localStorage.getItem('uid')?"/dashboard":"/signin"} size="small">Apply Loan Now</Button>
                                     </CardActions>
                                 </Card>
                             </Grid>
-                        ))}
+                        )) : <CircularProgress />}
                     </Grid>
                 </Container>
             </main>
