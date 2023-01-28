@@ -85,8 +85,8 @@ function TableContent() {
                             </TableCell>
                             <TableCell align="right">{row.LoanAmnt}</TableCell>
                             <TableCell align="right">{row.Duration}</TableCell>
-                            <TableCell align="right">{row.interest}</TableCell>
-                            <TableCell align="right">{status[1]}</TableCell>
+                            <TableCell align="right">{row.Interest}%</TableCell>
+                            <TableCell align="right">{status[row.Status]}</TableCell>
                         </TableRow>
                     )) : <TableRow>
                         <TableCell>

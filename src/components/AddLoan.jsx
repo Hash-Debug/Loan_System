@@ -23,6 +23,17 @@ export default function AddLoan({docid}) {
     const [Employment, setEmployment] = React.useState(null)
     const [Duration, setDuration] = React.useState(null)
 
+    const Interest=(loantype)=>{
+        if(loantype==='Home')
+        return 7
+        if(loantype==='Personal')
+        return 24
+        if(loantype==='Vehicle')
+        return 14
+        if(loantype==='Education')
+        return 8
+    }
+
 
 
     const handleSubmit = async(e) => {
@@ -33,7 +44,9 @@ export default function AddLoan({docid}) {
             Income: Income,
             Cibil: Cibil,
             Employment: Employment,
-            Duration: Duration
+            Duration: Duration,
+            Status: 2,
+            Interest: Interest(LoanType)
         }
         console.log(loanData);
 
@@ -42,6 +55,8 @@ export default function AddLoan({docid}) {
         let loans= (await getDoc(userRef)).data().Loan || []
         loans.push(loanData)
         updateDoc(userRef,{Loan : loans})
+        handleClose()
+        window.location='/dashboard'
         // await setDoc(userRef,{
         //     Loans : [loanData]
 
