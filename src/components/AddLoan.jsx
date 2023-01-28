@@ -54,9 +54,13 @@ export default function AddLoan({docid}) {
         console.log(userRef);
         let loans= (await getDoc(userRef)).data().Loan || []
         loans.push(loanData)
-        updateDoc(userRef,{Loan : loans})
-        handleClose()
-        window.location='/dashboard'
+        updateDoc(userRef,{Loan : loans}).then(()=>{
+            handleClose()
+            window.location='/dashboard'
+
+        }).catch((error)=>{
+            alert("some error occured", error)
+        })
         // await setDoc(userRef,{
         //     Loans : [loanData]
 
