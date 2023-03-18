@@ -7,9 +7,6 @@ import SignUp from "./components/SignUp";
 import Dashboard from "./components/Dashboard";
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from "./api/firebase";
-
-
-
 export default function App() {
 
   const [user, setuser] = useState(null)
