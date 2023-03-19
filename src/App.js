@@ -22,7 +22,6 @@ export default function App() {
       <BrowserRouter>
           <Navbar user={user} />
         <Routes>
-
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn/>} />
           <Route path="/signup" element={<SignUp/>} />
