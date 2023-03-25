@@ -21,7 +21,7 @@ export default function Home() {
         items: [
 
             { ImgUrl: "https://tfipost.com/wp-content/uploads/2022/04/Shinchan_in_hindi_dubbed_show-1024x571.jpg", Title: "ShinChan", Description: "Shin Chan needed loan to go on a trip to Goa with his friends. His loan was approved, and he had great adventures with Action Comin." },
-            { ImgUrl: "https://www.sbs.com.au/popasia/sites/sbs.com.au.popasia/files/styles/full/public/doraemon_header.jpg?itok=M76dFen8&mtime=1470996145", Title: "Doreamon", Description: "Doreamon's time machine was broken due to Nobitas carelessness so he decided to use loaner, now he is having fun in the 24th century. " },
+            { ImgUrl: "https://wallpapers.com/images/featured/6ag1ry72uy2s9jmg.jpg", Title: "Doreamon", Description: "Doreamon's time machine was broken due to Nobitas carelessness so he decided to use loaner, now he is having fun in the 24th century. " },
             { ImgUrl: "https://cdn.sonicgang.com/wp-content/uploads/2019/05/Seesheemaru-large-min.jpg", Title: "Sishimaru", Description: "Sishimaru was put on a strict diet by Hatori, so he needed personal loan to buy chocolate roll, 🤫 why fear when loaner is here" }
         ]
     };
