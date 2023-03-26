@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Typography, ListItemButton, List, ListItemIcon, ListItem, ListItemText, Grid, CircularProgress } from '@mui/material';
+import { Typography, ListItemButton, List, ListItemIcon, ListItem, ListItemText, Grid, CircularProgress, Button } from '@mui/material';
 import { AccountBalance, AlternateEmail, Person, PhoneAndroid } from '@mui/icons-material';
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '../api/firebase';
@@ -38,9 +38,34 @@ export default function Dashboard() {
   }, [])
   // console.log();
 
+  const sendReq = ()=>{
+    const data = {
+      "married": 0,
+      "dependents": 2,
+      "education": 1,
+      "selfEmployed": 0,
+      "applicantIncome": 20000,
+      "loanAmount": 500,
+      "creditHistory": 1
+    }
+     fetch("http://127.0.0.1:5000/api/approveLoan",{
+      method: "POST", 
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data), 
+    }).then((res)=>{res.text().then((res2)=>{
+        console.log(res2);
+      })
+    })
+    
+  }
+
 
   return (
     <div style={{ padding: '20px' }}>
+      <Button title='predict' onClick={sendReq} >hi</Button>
       <AddLoan docid={docid} />
 
       <Typography align='center' variant='h2'>Dashboard</Typography>

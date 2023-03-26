@@ -7,13 +7,14 @@ cors=CORS(app, resources={r"/api/*":{"origins":"*"}})
 
 @app.route('/api/approveLoan',methods=['GET','POST'])
 def approveLoan():
-    married = request.args.get('married')
-    dependents = request.args.get('dependents')
-    education = request.args.get('education')
-    selfEmployed = request.args.get('selfEmployed')
-    applicantIncome = request.args.get('applicantIncome')
-    loanAmount = request.args.get('loanAmount')
-    creditHistory = request.args.get('creditHistory')
+    print(request.json['married'])
+    married = request.json['married']
+    dependents = request.json['dependents']
+    education = request.json['education']
+    selfEmployed = request.json['selfEmployed']
+    applicantIncome = request.json['applicantIncome']
+    loanAmount = request.json['loanAmount']
+    creditHistory = request.json['creditHistory']
 
     print(loanAmount)
     
